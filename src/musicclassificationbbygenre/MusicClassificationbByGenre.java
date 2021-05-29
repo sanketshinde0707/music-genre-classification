@@ -19,6 +19,7 @@ public class MusicClassificationbByGenre {
   static int i = 0;
 
   public static double Round(double a) {
+
     i++;
     String s = Double.toString(a);
     if (i == 4) {
@@ -85,7 +86,9 @@ public class MusicClassificationbByGenre {
       nnet.calculate();
       double[] networkOutput = nnet.getOutput();
       for (int i = 0; i < networkOutput.length; i++) {
+        System.out.println(networkOutput[i]);
         networkOutput[i] = Round(networkOutput[i]);
+        System.out.println(networkOutput[i]);
       }
       System.out.print("Input: " + Arrays.toString(trainingElement.getInput()));
 
