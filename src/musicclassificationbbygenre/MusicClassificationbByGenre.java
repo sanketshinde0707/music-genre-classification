@@ -52,17 +52,9 @@ public class MusicClassificationbByGenre {
     System.out.println("Running Sample");
     System.out.println("Using training set " + trainingSetFileName);
 
-    // create training set
+    // create training set and testing set
     DataSet trainingSet = null;
     DataSet testingSet = null;
-
-    try {
-      testingSet = TrainingSetImport.importFromFile(trainingSetFileName, 8, 0, ",");
-    } catch (FileNotFoundException ex) {
-      System.out.println("File not found!");
-    } catch (IOException | NumberFormatException ex) {
-      System.out.println("Error reading file or bad number format!");
-    }
 
     try {
       trainingSet = TrainingSetImport.importFromFile(trainingSetFileName, inputsCount, outputsCount, ",");
@@ -85,6 +77,14 @@ public class MusicClassificationbByGenre {
     System.out.println("Training neural network...");
     neuralNet.learn(trainingSet);
     System.out.println("Done!");
+
+    try {
+      testingSet = TrainingSetImport.importFromFile(testingSetFileName, 8, 0, ",");
+    } catch (FileNotFoundException ex) {
+      System.out.println("File not found!");
+    } catch (IOException | NumberFormatException ex) {
+      System.out.println("Error reading file or bad number format!");
+    }
 
     // test perceptron
     System.out.println("Testing trained neural network");
