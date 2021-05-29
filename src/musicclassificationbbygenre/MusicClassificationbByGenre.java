@@ -14,8 +14,6 @@ import org.neuroph.nnet.learning.MomentumBackpropagation;
 import org.neuroph.util.TrainingSetImport;
 import org.neuroph.util.TransferFunctionType;
 
-import javax.xml.crypto.Data;
-
 public class MusicClassificationbByGenre {
 
   static int i = 0;
@@ -95,8 +93,10 @@ public class MusicClassificationbByGenre {
 
     for (DataSetRow trainingElement : dset.getRows()) {
       nnet.setInput(trainingElement.getInput());
+//      System.out.println(Arrays.toString(trainingElement.getInput()));
       nnet.calculate();
       double[] networkOutput = nnet.getOutput();
+      System.out.println(Arrays.toString(nnet.getOutput()));
       for (int i = 0; i < networkOutput.length; i++) {
         networkOutput[i] = Round(networkOutput[i]);
       }
