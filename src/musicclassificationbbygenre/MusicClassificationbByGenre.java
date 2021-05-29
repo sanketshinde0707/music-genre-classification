@@ -14,6 +14,8 @@ import org.neuroph.nnet.learning.MomentumBackpropagation;
 import org.neuroph.util.TrainingSetImport;
 import org.neuroph.util.TransferFunctionType;
 
+import javax.xml.crypto.Data;
+
 public class MusicClassificationbByGenre {
 
   static int i = 0;
@@ -43,6 +45,7 @@ public class MusicClassificationbByGenre {
   public static void main(String[] args) {
 
     String trainingSetFileName = "Music.txt";
+    String testingSetFileName = "MusicTest.txt";
     int inputsCount = 8;
     int outputsCount = 4;
 
@@ -51,6 +54,15 @@ public class MusicClassificationbByGenre {
 
     // create training set
     DataSet trainingSet = null;
+    DataSet testingSet = null;
+
+    try {
+      testingSet = TrainingSetImport.importFromFile(trainingSetFileName, 8, 0, ",");
+    } catch (FileNotFoundException ex) {
+      System.out.println("File not found!");
+    } catch (IOException | NumberFormatException ex) {
+      System.out.println("Error reading file or bad number format!");
+    }
 
     try {
       trainingSet = TrainingSetImport.importFromFile(trainingSetFileName, inputsCount, outputsCount, ",");
@@ -76,7 +88,7 @@ public class MusicClassificationbByGenre {
 
     // test perceptron
     System.out.println("Testing trained neural network");
-    testMusicClassification(neuralNet, trainingSet);
+    testMusicClassification(neuralNet, testingSet);
   }
 
   public static void testMusicClassification(NeuralNetwork nnet, DataSet dset) {
@@ -86,9 +98,7 @@ public class MusicClassificationbByGenre {
       nnet.calculate();
       double[] networkOutput = nnet.getOutput();
       for (int i = 0; i < networkOutput.length; i++) {
-        System.out.println(networkOutput[i]);
         networkOutput[i] = Round(networkOutput[i]);
-        System.out.println(networkOutput[i]);
       }
       System.out.print("Input: " + Arrays.toString(trainingElement.getInput()));
 
